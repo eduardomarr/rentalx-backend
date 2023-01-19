@@ -1,4 +1,4 @@
-import { Category } from "../../entities/Category";
+import { Category } from "@modules/cars/infra/typeorm/entities/Category";
 import {
   ICategoriesRepository,
   ICreateCategoryDTO,
@@ -9,6 +9,11 @@ class CategoriesRepositoryInMemory implements ICategoriesRepository {
 
   async findByName(name: string): Promise<Category> {
     const category = this.categories.find((category) => category.name === name);
+
+    if (!category) {
+      throw new Error('Category name not found!')
+    }
+
     return category;
   }
 
